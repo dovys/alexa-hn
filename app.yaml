@@ -1,0 +1,19 @@
+runtime: custom
+env: flex
+
+automatic_scaling:
+  min_num_instances: 1
+  max_num_instances: 2
+
+# The config doesn't even work. App Engine calls the health check 50 times/s regardless of the config
+health_check:
+  enable_health_check: False
+  # https://issuetracker.google.com/issues/36024384
+  check_interval_sec: 5
+  timeout_sec: 5
+  unhealthy_threshold: 2
+  healthy_threshold: 2
+
+env_variables:
+  STUB_HN: true
+  CACHE_TTL: 10s
