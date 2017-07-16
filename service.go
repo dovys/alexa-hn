@@ -42,7 +42,7 @@ func (s *service) ReadTopStories(context.Context) (*AlexaResponse, error) {
 	}
 
 	if len(top) > frontPageLimit {
-		top = top[0:5] // todo: use frontPageLimit
+		top = top[0:frontPageLimit] // todo: use frontPageLimit
 	}
 
 	wg := &sync.WaitGroup{}

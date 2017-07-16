@@ -58,8 +58,7 @@ func main() {
 
 func MakeEchoIntentHandler(svc alexahn.Service) alexa.AlexaRequestHandler {
 	return func(r *http.Request, echoReq *alexa.EchoRequest, echoResp *alexa.EchoResponse) {
-		ctx := appengine.NewContext(r)
-
+		ctx := appengine.BackgroundContext()
 		stories, err := svc.ReadTopStories(ctx)
 		if err != nil {
 			fmt.Println(err)

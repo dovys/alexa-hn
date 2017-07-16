@@ -1,5 +1,5 @@
 {
-    "memo": "7ca9f8678d54a27b1eb457d5d134ab1c0333c6857a9e61c9d8b2e5dc9f625474",
+    "memo": "41b75e8515652bea6df41920325f26de7c312f065993ba4b889ae6d48ff2e364",
     "projects": [
         {
             "name": "github.com/codegangsta/negroni",
@@ -7,6 +7,14 @@
             "revision": "c0db5feaa33826cd5117930c8f4ee5c0f565eec6",
             "packages": [
                 "."
+            ]
+        },
+        {
+            "name": "github.com/golang/protobuf",
+            "branch": "master",
+            "revision": "0a4f71a498b7c4812f64969510bcb4eca251e33a",
+            "packages": [
+                "proto"
             ]
         },
         {
@@ -39,6 +47,23 @@
             "revision": "5d4071c39457e5022c5226ca41a9e1494c0d31a8",
             "packages": [
                 "skillserver"
+            ]
+        },
+        {
+            "name": "golang.org/x/net",
+            "branch": "master",
+            "revision": "f01ecb60fe3835d80d9a0b7b2bf24b228c89260e",
+            "packages": [
+                "context"
+            ]
+        },
+        {
+            "name": "google.golang.org/appengine",
+            "version": "v1.0.0",
+            "revision": "150dc57a1b433e64154302bdc40b6bb8aefa313a",
+            "packages": [
+                ".",
+                "memcache"
             ]
         }
     ]
