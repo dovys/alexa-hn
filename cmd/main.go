@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"time"
 
+	"google.golang.org/appengine"
+
 	alexahn "github.com/dovys/alexa-hn"
 	"github.com/dovys/alexa-hn/hn"
 	"github.com/dovys/alexa-hn/stub"
@@ -13,8 +15,9 @@ import (
 )
 
 type config struct {
-	StubHN   bool          `envconfig:"stub_hn" default:"false"`
-	CacheTTL time.Duration `envconfig:"cache_ttl" default:"1h"`
+	StubHN    bool          `envconfig:"stub_hn" default:"true"`
+	Memcached bool          `envconfig:"memcached" default:"false"`
+	CacheTTL  time.Duration `envconfig:"cache_ttl" default:"10s"`
 }
 
 func main() {
@@ -22,14 +25,20 @@ func main() {
 	envconfig.MustProcess("", &c)
 
 	var hnc hn.Client
-
 	if c.StubHN {
 		hnc = stub.NewStubHNClient()
 	} else {
 		hnc = hn.NewClient(&http.Client{})
 	}
 
-	svc := alexahn.Cache(alexahn.NewService(hnc), c.CacheTTL)
+	cache := alexahn.InMemoryCache
+	if c.Memcached {
+		cache = alexahn.MemcachedCache
+	}
+
+	fmt.Printf("%+v\n", c)
+
+	svc := cache(alexahn.NewService(hnc), c.CacheTTL)
 
 	h := MakeEchoIntentHandler(svc)
 	apps := map[string]interface{}{
@@ -47,9 +56,11 @@ func main() {
 	alexa.Run(apps, "8080")
 }
 
-func MakeEchoIntentHandler(svc alexahn.Service) func(*alexa.EchoRequest, *alexa.EchoResponse) {
-	return func(echoReq *alexa.EchoRequest, echoResp *alexa.EchoResponse) {
-		stories, err := svc.ReadTopStories()
+func MakeEchoIntentHandler(svc alexahn.Service) alexa.AlexaRequestHandler {
+	return func(r *http.Request, echoReq *alexa.EchoRequest, echoResp *alexa.EchoResponse) {
+		ctx := appengine.NewContext(r)
+
+		stories, err := svc.ReadTopStories(ctx)
 		if err != nil {
 			fmt.Println(err)
 			echoResp.OutputSpeech("Please try again later")

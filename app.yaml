@@ -15,5 +15,6 @@ health_check:
   healthy_threshold: 2
 
 env_variables:
+  MEMCACHED: true
   STUB_HN: true
   CACHE_TTL: 10s

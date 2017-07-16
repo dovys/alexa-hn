@@ -23,12 +23,14 @@ import (
 	"github.com/gorilla/mux"
 )
 
+type AlexaRequestHandler func(*http.Request, *EchoRequest, *EchoResponse)
+
 type EchoApplication struct {
 	AppID          string
 	Handler        func(http.ResponseWriter, *http.Request)
-	OnLaunch       func(*EchoRequest, *EchoResponse)
-	OnIntent       func(*EchoRequest, *EchoResponse)
-	OnSessionEnded func(*EchoRequest, *EchoResponse)
+	OnLaunch       AlexaRequestHandler
+	OnIntent       AlexaRequestHandler
+	OnSessionEnded AlexaRequestHandler
 }
 
 type StdApplication struct {
@@ -72,15 +74,15 @@ func Init(apps map[string]interface{}, router *mux.Router) {
 
 				if echoReq.GetRequestType() == "LaunchRequest" {
 					if app.OnLaunch != nil {
-						app.OnLaunch(echoReq, echoResp)
+						app.OnLaunch(r, echoReq, echoResp)
 					}
 				} else if echoReq.GetRequestType() == "IntentRequest" {
 					if app.OnIntent != nil {
-						app.OnIntent(echoReq, echoResp)
+						app.OnIntent(r, echoReq, echoResp)
 					}
 				} else if echoReq.GetRequestType() == "SessionEndedRequest" {
 					if app.OnSessionEnded != nil {
-						app.OnSessionEnded(echoReq, echoResp)
+						app.OnSessionEnded(r, echoReq, echoResp)
 					}
 				} else {
 					http.Error(w, "Invalid request.", http.StatusBadRequest)

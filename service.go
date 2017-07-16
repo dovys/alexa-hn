@@ -1,6 +1,7 @@
 package alexahn
 
 import (
+	"context"
 	"fmt"
 	"sync"
 
@@ -23,7 +24,7 @@ type AlexaResponse struct {
 }
 
 type Service interface {
-	ReadTopStories() (*AlexaResponse, error)
+	ReadTopStories(context.Context) (*AlexaResponse, error)
 }
 
 func NewService(hn hn.Client) Service {
@@ -34,7 +35,7 @@ type service struct {
 	hn hn.Client
 }
 
-func (s *service) ReadTopStories() (*AlexaResponse, error) {
+func (s *service) ReadTopStories(context.Context) (*AlexaResponse, error) {
 	top, err := s.hn.TopStories()
 	if err != nil {
 		return nil, err
