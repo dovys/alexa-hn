@@ -1,0 +1,45 @@
+{
+    "memo": "7ca9f8678d54a27b1eb457d5d134ab1c0333c6857a9e61c9d8b2e5dc9f625474",
+    "projects": [
+        {
+            "name": "github.com/codegangsta/negroni",
+            "branch": "master",
+            "revision": "c0db5feaa33826cd5117930c8f4ee5c0f565eec6",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/gorilla/context",
+            "branch": "master",
+            "revision": "08b5f424b9271eedf6f9f0ce86cb9396ed337a42",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/gorilla/mux",
+            "branch": "master",
+            "revision": "757bef944d0f21880861c2dd9c871ca543023cba",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/kelseyhightower/envconfig",
+            "branch": "master",
+            "revision": "8bf4bbfc795e2c7c8a5ea47b707453ed019e2ad4",
+            "packages": [
+                "."
+            ]
+        },
+        {
+            "name": "github.com/mikeflynn/go-alexa",
+            "branch": "master",
+            "revision": "5d4071c39457e5022c5226ca41a9e1494c0d31a8",
+            "packages": [
+                "skillserver"
+            ]
+        }
+    ]
+}

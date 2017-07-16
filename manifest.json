@@ -1,0 +1,10 @@
+{
+    "dependencies": {
+        "github.com/kelseyhightower/envconfig": {
+            "branch": "master"
+        },
+        "github.com/mikeflynn/go-alexa": {
+            "branch": "master"
+        }
+    }
+}
